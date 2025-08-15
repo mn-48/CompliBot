@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Response Streaming with Markdown Preview</title>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #output {
+            border: 1px solid #ddd;
+            padding: 10px;
+            width: 600px;
+            min-height: 200px;
+            background: #fafafa;
+        }
+        button {
+            padding: 8px 16px;
+            margin-top: 10px;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 400px;
+        }
+        pre {
+            background: #272822;
+            color: #f8f8f2;
+            padding: 8px;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h2>AI Streaming Response (Markdown Preview)</h2>
+    
+    <form id="promptForm">
+        <input type="text" id="prompt" name="prompt" placeholder="Enter your prompt..." required />
+        <button type="submit">Send</button>
+    </form>
+    
+    <div id="output"></div>
+
+    <script>
+        document.getElementById("promptForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const promptValue = document.getElementById("prompt").value;
+            const outputDiv = document.getElementById("output");
+            outputDiv.innerHTML = "";
+
+            let markdownBuffer = "";
+
+            fetch(`/stream?prompt=${encodeURIComponent(promptValue)}`)
+                .then(response => {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+
+                    function readChunk() {
+                        reader.read().then(({ done, value }) => {
+                            if (done) {
+                                console.log("Stream finished");
+                                return;
+                            }
+
+                            // Append incoming chunk to buffer
+                            markdownBuffer += decoder.decode(value, { stream: true });
+
+                            // Convert Markdown to HTML live
+                            outputDiv.innerHTML = marked.parse(markdownBuffer);
+
+                            readChunk();
+                        });
+                    }
+
+                    readChunk();
+                })
+                .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>

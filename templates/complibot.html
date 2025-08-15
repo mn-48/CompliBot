@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompliBot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.10/dist/full.css" rel="stylesheet" type="text/css" />
+</head>
+
+
+
+
+</head>
+
+<body class="bg-gray-50 font-sans">
+    <div class="max-w-6xl mx-auto p-6">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="font-bold text-2xl md:text-4xl lg:text-6xl">CompliBot</h1>
+            <p class="text-gray-600 mt-2">Your Smart Compliance Assistant for MSMEs</p>
+        </div>
+
+        <!-- Main Grid (50%-50%) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- Left Column -->
+            <div class="bg-white rounded-lg shadow p-6 space-y-5">
+                <div class="bg-gray-50 rounded-lg shadow p-6 space-y-4">
+
+
+                    <!-- Welcome -->
+                    <div>
+                        <h2 class="text-lg font-semibold">Welcome!</h2>
+                    </div>
+
+                    <!-- Next Due & Status -->
+                    <div class="flex gap-4">
+                        <div class="flex-1 bg-white rounded-lg p-3 text-left">
+                            <p class="text-sm text-gray-500">Next Due</p>
+                            <p class="font-semibold">VAT 6.3 Return</p>
+                            <p class="text-sm text-gray-500">5 days left</p>
+                        </div>
+                        <div class="flex-1 bg-white rounded-lg p-3 text-left">
+                            <p class="text-sm text-gray-500">Status</p>
+                            <p class="font-semibold text-gray-500">Payroll Compliant ✓</p>
+                            <!-- <p class="text-sm text-orange-500">Tax Filing Pending</p> -->
+                            <p class="text-sm text-gray-500 flex items-left gap-1">
+                                Tax Filing Pending
+                                <!-- Heroicons Microphone Icon -->
+                                <svg fill="#000000" height="16px" width="16px" version="1.1"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 512 512">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <g>
+                                            <g>
+                                                <path
+                                                    d="m439.5,236c0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,70-64,126.9-142.7,126.9-78.7,0-142.7-56.9-142.7-126.9 0-11.3-9.1-20.4-20.4-20.4s-20.4,9.1-20.4,20.4c0,86.2 71.5,157.4 163.1,166.7v57.5h-23.6c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h88c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-23.6v-57.5c91.6-9.3 163.1-80.5 163.1-166.7z">
+                                                </path>
+                                                <path
+                                                    d="m256,323.5c51,0 92.3-41.3 92.3-92.3v-127.9c0-51-41.3-92.3-92.3-92.3s-92.3,41.3-92.3,92.3v127.9c0,51 41.3,92.3 92.3,92.3zm-52.3-220.2c0-28.8 23.5-52.3 52.3-52.3s52.3,23.5 52.3,52.3v127.9c0,28.8-23.5,52.3-52.3,52.3s-52.3-23.5-52.3-52.3v-127.9z">
+                                                </path>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- Chat Assistant -->
+
+
+                    <div class="flex-1 overflow-y-auto  overflow-x-auto space-y-2">
+                        <h3 class="text-sm font-semibold mb-2">Chat Assistant</h3>
+                        <div>
+                            <div id="input_prompt_container" class="chat chat-end p-6">
+                                <div id="input_prompt"
+                                    class="chat-bubble chat-bubble-error bg-cyan-700 text-white hidden">
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+
+
+                        <div class="chat chat-start">
+                            <div class="chat-image avatar">
+                                <div class="w-10 rounded-full">
+                                    <img alt="Tailwind CSS chat bubble component"
+                                        src="https://img.daisyui.com/images/profile/demo/kenobee@192.webp" />
+                                </div>
+                            </div>
+                            <!-- <div class="chat-bubble bg-blue-50">Not leave it in Darkness</div> -->
+                            <!-- <div id="output" class="chat-bubble bg-blue-50"></div> -->
+                            <div id="output" class="w-full chat-bubble bg-blue-50 text-gray-900"></div>
+                        </div>
+
+
+
+
+
+
+                    </div>
+
+                    <!-- Input box -->
+
+
+                    <form id="promptForm" class="mt-3 flex border rounded-lg overflow-hidden">
+                        <input type="text" id="prompt" name="prompt" placeholder="Type a message..."
+                            class="flex-1 p-2 text-sm focus:outline-none" required />
+                        <button type="submit" class="bg-blue-500 px-4 text-white">➤</button>
+                    </form>
+
+
+
+
+
+
+
+                    <!-- 
+
+
+
+                        <div class="mt-3 flex border rounded-lg overflow-hidden">
+                            <input type="text" placeholder="Type a message..."
+                                class="flex-1 p-2 text-sm focus:outline-none">
+                            <button class="bg-blue-500 px-4 text-white">➤</button>
+                        </div> -->
+                </div>
+
+
+                <!-- Documents -->
+                <div class="flex justify-between gap-4">
+                    <div class="flex-1 bg-white rounded-lg p-3 text-left">
+                        <h3 class="text-sm font-semibold mb-1">Documents</h3>
+                        <ul class="text-sm text-blue-500 space-y-1">
+                            <li><a href="#">Payslips</a></li>
+                            <li><a href="#">Tax Returns</a></li>
+                            <li><a href="#">Contracts</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Alerts -->
+                    <div class="flex-1 bg-white rounded-lg p-3 text-left">
+                        <h3 class="text-sm font-semibold mb-1">Alerts</h3>
+                        <p class="text-sm text-gray-500">3 days before</p>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Right Column -->
+            <div class="bg-white rounded-lg shadow p-5 flex flex-col justify-between h-full space-y-6">
+                <!-- Features -->
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="font-semibold text-xl md:text-2xl lg:text-3xl">Compliance Chatbot</h3>
+                        <p class="text-gray-500 text-sm">Get answers to your regulatory questions</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-xl md:text-2xl lg:text-3xl">Document Automation</h3>
+                        <p class="text-gray-500 text-sm">Auto-generate tax returns, payslips and more</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-xl md:text-2xl lg:text-3xl">Alerts & Reminders</h3>
+                        <p class="text-gray-500 text-sm">Track filing deadlines and receive notifications</p>
+                    </div>
+                </div>
+
+                <!-- Documents/Alerts -->
+                <div class="grid grid-cols-2 gap-4 p-4 bg-white h-100%">
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">Documents</h4>
+                        <ul class="text-sm text-blue-500 space-y-1">
+                            <li><a href="#">Payslips</a></li>
+                            <li><a href="#">Tax Returns</a></li>
+                            <li><a href="#">Contracts</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="bg-gray-50 rounded-lg p-4">
+                        <h4 class="font-semibold mb-2">Alerts</h4>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-500">Email</span>
+                            <span class="bg-white px-2 py-1 rounded border text-sm">3 days before</span>
+                        </div>
+
+                        <div class="bg-gray-50 flex items-center justify-between mt-2">
+                            <span class="text-sm text-gray-500">SMS</span>
+                            <!-- <input type="checkbox" checked="checked" class="toggle toggle-info text-sm" /> -->
+                            <input type="checkbox" checked="checked" class="toggle toggle-sm text-cyan-900" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+
+    <script>
+
+        document.getElementById("promptForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const promptInput = document.getElementById("prompt");
+            const promptValue = promptInput.value.trim();
+            const inputPromptDiv = document.getElementById("input_prompt");
+            const inputPromptDivContainer = document.getElementById("input_prompt_container");
+            const outputDiv = document.getElementById("output");
+
+            if (!promptValue) return; // Avoid empty submissions
+
+            // Show the user's message
+            inputPromptDivContainer.classList.remove("hidden");
+            inputPromptDiv.textContent = promptValue;
+            inputPromptDiv.classList.remove("hidden");
+            // if (inputPromptDiv.textContent
+            //     .trim() !== ""
+            // ) {
+
+            // }
+
+            // Clear the input box
+            promptInput.value = "";
+
+            // Reset and hide output before streaming starts
+            outputDiv.innerHTML = "";
+            outputDiv.classList.add("hidden");
+            // inputPromptDivContainer.classList.add("hidden");
+
+            let markdownBuffer = "";
+
+            fetch(`/stream?prompt=${encodeURIComponent(promptValue)}`)
+                .then(response => {
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+
+                    function readChunk() {
+                        reader.read().then(({ done, value }) => {
+                            if (done) {
+                                console.log("Stream finished");
+                                return;
+                            }
+
+                            // Append incoming chunk to buffer
+                            markdownBuffer += decoder.decode(value, { stream: true });
+
+                            // Show and update content if not empty
+                            if (markdownBuffer.trim() !== "") {
+                                outputDiv.classList.remove("hidden");
+                                outputDiv.innerHTML = marked.parse(markdownBuffer);
+                            }
+
+                            readChunk();
+                        });
+                    }
+
+                    readChunk();
+                })
+                .catch(err => console.error(err));
+        });
+
+
+    </script>
+
+</body>
+
+</html>
